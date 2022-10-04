@@ -1,0 +1,25 @@
+apiVersion: networking.istio.io/v1beta1
+kind: Gateway
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"networking.istio.io/v1beta1","kind":"Gateway","metadata":{"annotations":{},"name":"microsec-gateway","namespace":"microsec-system","resourceVersion":"32759333"},"spec":{"selector":{"istio":"ingressgateway"},"servers":[{"hosts":["dapis.microsec.ai"],"port":{"name":"https","number":443,"protocol":"HTTPS"},"tls":{"credentialName":"microsec-domain-cert-prod","mode":"SIMPLE"}}]}}
+  creationTimestamp: "2021-03-15T11:40:03Z"
+  generation: 4
+  name: microsec-gateway
+  namespace: microsec-system
+  resourceVersion: "355744113"
+  uid: 4fa3cdda-cc86-4789-8ab3-d9e60a8ca858
+spec:
+  selector:
+    istio: ingressgateway
+  servers:
+  - hosts:
+    - dapis.microsec.ai
+    port:
+      name: https
+      number: 443
+      protocol: HTTPS
+    tls:
+      credentialName: microsec-domain-cert-prod
+      mode: SIMPLE

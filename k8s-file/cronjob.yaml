@@ -1,0 +1,54 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  annotations:
+    keel.sh/approvals: "1"
+    keel.sh/policy: all
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"batch/v1","kind":"CronJob","metadata":{"annotations":{},"name":"periodic-scanner-long","namespace":"microsec-system"},"spec":{"failedJobsHistoryLimit":5,"jobTemplate":{"spec":{"template":{"metadata":{"annotations":{"sidecar.istio.io/inject":"false"}},"spec":{"containers":[{"image":"gcr.io/msec-001/scheduler:v1.2.0","imagePullPolicy":"IfNotPresent","name":"periodic-scanner-long","resources":{},"terminationMessagePath":"/dev/termination-log","terminationMessagePolicy":"File","volumeMounts":[{"mountPath":"/app","name":"config"}]}],"dnsPolicy":"ClusterFirst","imagePullSecrets":[{"name":"regcred"}],"restartPolicy":"OnFailure","schedulerName":"default-scheduler","securityContext":{},"terminationGracePeriodSeconds":30,"volumes":[{"configMap":{"defaultMode":420,"name":"periodic-scanner-config-long"},"name":"config"}]}}}},"schedule":"0 */6 * * *","startingDeadlineSeconds":120}}
+  creationTimestamp: "2022-05-12T13:16:14Z"
+  name: periodic-scanner-long
+  namespace: microsec-system
+  resourceVersion: "410973239"
+  uid: 2657a061-7825-493d-bcdd-d02519e67230
+spec:
+  concurrencyPolicy: Allow
+  failedJobsHistoryLimit: 5
+  jobTemplate:
+    metadata:
+      creationTimestamp: null
+    spec:
+      template:
+        metadata:
+          annotations:
+            sidecar.istio.io/inject: "false"
+          creationTimestamp: null
+        spec:
+          containers:
+          - image: gcr.io/msec-001/scheduler:v1.22.0
+            imagePullPolicy: IfNotPresent
+            name: periodic-scanner-long
+            resources: {}
+            terminationMessagePath: /dev/termination-log
+            terminationMessagePolicy: File
+            volumeMounts:
+            - mountPath: /app
+              name: config
+          dnsPolicy: ClusterFirst
+          imagePullSecrets:
+          - name: regcred
+          restartPolicy: OnFailure
+          schedulerName: default-scheduler
+          securityContext: {}
+          terminationGracePeriodSeconds: 30
+          volumes:
+          - configMap:
+              defaultMode: 420
+              name: periodic-scanner-config-long
+            name: config
+  schedule: 0 */6 * * *
+  startingDeadlineSeconds: 120
+  successfulJobsHistoryLimit: 3
+  suspend: false
+status:
+  lastScheduleTime: "2022-10-04T06:00:00Z"

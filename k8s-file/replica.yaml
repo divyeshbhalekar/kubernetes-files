@@ -1,0 +1,97 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  annotations:
+    deployment.kubernetes.io/desired-replicas: "1"
+    deployment.kubernetes.io/max-replicas: "2"
+    deployment.kubernetes.io/revision: "2"
+    meta.helm.sh/release-name: aethia
+    meta.helm.sh/release-namespace: microsec-system
+  creationTimestamp: "2022-09-30T16:20:38Z"
+  generation: 1
+  labels:
+    app: aethia
+    pod-template-hash: 58c7446c94
+  name: aethia-58c7446c94
+  namespace: microsec-system
+  ownerReferences:
+  - apiVersion: apps/v1
+    blockOwnerDeletion: true
+    controller: true
+    kind: Deployment
+    name: aethia
+    uid: 504121b5-6d0a-48cc-aa85-a7d2d14dd1ab
+  resourceVersion: "408068865"
+  uid: 9fc9be5a-b103-4f61-95fc-98e12063a772
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: aethia
+      pod-template-hash: 58c7446c94
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: aethia
+        pod-template-hash: 58c7446c94
+    spec:
+      containers:
+      - env:
+        - name: MONGODB_ADDRESS
+          value: mongodb:27017
+        - name: MONGODB_USERNAME
+          value: microsec
+        - name: MONGODB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              key: mongodb-root-password
+              name: mongodb
+        - name: REDIS_URL
+          value: redis:6379
+        - name: KUBERNETES_MANAGER_URL
+          value: http://kubernetes-manager:6970
+        - name: SECRETS_MANAGER_URL
+          value: http://secrets-manager:6972
+        - name: RBAC_MANAGER_URL
+          value: http://rbac-manager:6971
+        - name: RBAC_ROOT_TOKEN
+          valueFrom:
+            secretKeyRef:
+              key: RBAC_ROOT_TOKEN
+              name: rbac-root-token
+        - name: LOGSTASH_HOST
+          value: logstash.elastic
+        - name: LOGSTASH_PORT
+          value: "8080"
+        - name: MICROSEC_API_URL
+          value: 35.202.29.101
+        image: gcr.io/msec-001/aethia:417aec9
+        imagePullPolicy: IfNotPresent
+        name: aethia
+        ports:
+        - containerPort: 6980
+          name: http
+          protocol: TCP
+        resources:
+          limits:
+            cpu: 20m
+            memory: 100Mi
+          requests:
+            cpu: 2m
+            memory: 50Mi
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      imagePullSecrets:
+      - name: regcred
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+status:
+  availableReplicas: 1
+  fullyLabeledReplicas: 1
+  observedGeneration: 1
+  readyReplicas: 1
+  replicas: 1

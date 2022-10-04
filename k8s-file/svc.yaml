@@ -1,0 +1,35 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"labels":{"k8s-app":"kiali-backend"},"name":"kiali-backend","namespace":"microsec-system"},"spec":{"ports":[{"name":"http","port":20001,"protocol":"TCP"},{"name":"http-metrics","port":9090,"protocol":"TCP"}],"selector":{"k8s-app":"kiali-backend"},"sessionAffinity":"None","type":"ClusterIP"}}
+  creationTimestamp: "2021-06-06T11:44:17Z"
+  labels:
+    k8s-app: kiali-backend
+  name: kiali-backend
+  namespace: microsec-system
+  resourceVersion: "244948709"
+  uid: d5b9fefa-d31a-449f-80c5-bc98f30de90e
+spec:
+  clusterIP: 10.28.2.51
+  clusterIPs:
+  - 10.28.2.51
+  ipFamilies:
+  - IPv4
+  ipFamilyPolicy: SingleStack
+  ports:
+  - name: http
+    port: 20001
+    protocol: TCP
+    targetPort: 20001
+  - name: http-metrics
+    port: 9090
+    protocol: TCP
+    targetPort: 9090
+  selector:
+    k8s-app: kiali-backend
+  sessionAffinity: None
+  type: ClusterIP
+status:
+  loadBalancer: {}

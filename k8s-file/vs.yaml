@@ -1,0 +1,28 @@
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"networking.istio.io/v1beta1","kind":"VirtualService","metadata":{"annotations":{},"name":"kiali-backend","namespace":"microsec-system"},"spec":{"gateways":["microsec-gateway"],"hosts":["dapis.microsec.ai"],"http":[{"match":[{"uri":{"prefix":"/visibility/"}}],"rewrite":{"uri":"/"},"route":[{"destination":{"host":"kiali-backend","port":{"number":20001}}}]}]}}
+  creationTimestamp: "2021-10-29T14:50:37Z"
+  generation: 4
+  name: kiali-backend
+  namespace: microsec-system
+  resourceVersion: "130710746"
+  uid: 6e29d96c-b09a-4f78-9be8-48d2bd00cf60
+spec:
+  gateways:
+  - microsec-gateway
+  hosts:
+  - dapis.microsec.ai
+  http:
+  - match:
+    - uri:
+        prefix: /visibility/
+    rewrite:
+      uri: /
+    route:
+    - destination:
+        host: kiali-backend
+        port:
+          number: 20001
